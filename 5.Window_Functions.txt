@@ -1,0 +1,78 @@
+MySQL Window Functions: Use Cases for Data Analysts and Data Scientists
+This file provides practical use cases for MySQL window functions, supported in MySQL 8.0+. Window functions enable advanced analytical queries without complex subqueries, making them essential for data analysis tasks like ranking, running totals, and comparisons. Below are key use cases with explanations, aligned with the examples and practice questions in Window_Functions.sql.
+1. Ranking and Leaderboards
+
+Use Case: Rank customers, products, or sales by metrics like total spent, price, or order volume.
+Functions: ROW_NUMBER(), RANK(), DENSE_RANK().
+Example: Rank products by price to identify top-priced items (RANK() or DENSE_RANK() for ties). Use ROW_NUMBER() to assign unique positions for a leaderboard, such as numbering orders by date.
+Why Useful: Helps identify top performers (e.g., top 10 customers by sales) or prioritize items (e.g., most expensive products). DENSE_RANK() is ideal when ties should not skip ranks, while ROW_NUMBER() ensures unique identifiers.
+
+2. Segmentation and Bucketing
+
+Use Case: Divide data into groups (e.g., quartiles, deciles) for cohort analysis or performance segmentation.
+Function: NTILE(n).
+Example: Segment customers into four quartiles based on total spending to identify high-value customers or those needing engagement.
+Why Useful: Enables targeted analysis, such as marketing campaigns for low-spending customers or loyalty programs for top spenders. Useful for statistical analysis and customer segmentation.
+
+3. Running Totals and Cumulative Metrics
+
+Use Case: Calculate cumulative metrics over time, such as running sales totals or cumulative order counts.
+Functions: SUM(), COUNT(), with ROWS UNBOUNDED PRECEDING.
+Example: Compute a running total of order amounts to track revenue growth over time or cumulative orders per customer.
+Why Useful: Tracks trends and growth patterns, such as monitoring sales performance or customer activity over time. Essential for financial reporting and time-series analysis.
+
+4. Moving Averages and Smoothing
+
+Use Case: Smooth time-series data to identify trends, such as average sales over a rolling period.
+Function: AVG() with ROWS BETWEEN n PRECEDING AND CURRENT ROW.
+Example: Calculate a 3-day moving average of order amounts to identify short-term sales trends.
+Why Useful: Reduces noise in data, making trends clearer. Common in financial analysis, sales forecasting, and performance monitoring.
+
+5. Partitioned Rankings and Grouped Analysis
+
+Use Case: Perform rankings or calculations within groups, such as ranking orders per customer or sales per city.
+Function: PARTITION BY with RANK(), ROW_NUMBER(), or aggregates.
+Example: Rank each customer’s orders by amount to identify their most significant purchases.
+Why Useful: Allows granular analysis within subgroups without collapsing data (unlike GROUP BY). Ideal for customer-level insights or regional performance comparisons.
+
+6. Accessing Adjacent Rows
+
+Use Case: Compare a row with its previous or next row, such as analyzing order frequency or price changes.
+Functions: LAG(), LEAD().
+Example: Use LAG() to compare a customer’s current order amount with their previous order, or LEAD() to show the next order date.
+Why Useful: Enables time-based or sequential comparisons, such as calculating order intervals or detecting price drops. Critical for retention analysis and trend detection.
+
+7. First and Last Values in Groups
+
+Use Case: Identify the first or last value in a group, such as the most or least expensive product per category.
+Functions: FIRST_VALUE(), LAST_VALUE().
+Example: Find the most expensive product in each category using FIRST_VALUE() or the least expensive with LAST_VALUE().
+Why Useful: Simplifies identifying boundary values within groups, such as top performers or outliers in product pricing or sales data.
+
+8. Time-Based Window Calculations
+
+Use Case: Calculate metrics over a time range, such as total sales in the last 30 days per city.
+Functions: SUM(), AVG(), with RANGE BETWEEN INTERVAL n DAY PRECEDING AND CURRENT ROW.
+Example: Compute total sales per city for the last 30 days to analyze recent regional performance.
+Why Useful: Enables dynamic time-based analysis, such as rolling sales metrics or cohort performance, without complex subqueries.
+
+9. Percentile and Distribution Analysis
+
+Use Case: Analyze the distribution of data, such as where a product’s price or customer’s spending ranks relative to others.
+Functions: CUME_DIST(), PERCENT_RANK().
+Example: Use CUME_DIST() to find the percentile rank of product prices or PERCENT_RANK() to rank customers by spending.
+Why Useful: Helps understand data distribution, identify outliers, or benchmark performance (e.g., top 10% of spenders). Common in statistical analysis and competitive analysis.
+
+10. Advanced Analytics Without Subqueries
+
+Use Case: Replace complex subqueries with window functions for cleaner, faster queries.
+Example: Instead of a subquery to find each customer’s highest order, use RANK() with PARTITION BY to rank orders within customers.
+Why Useful: Improves query readability and performance, especially for large datasets. Simplifies complex analytical tasks like identifying top records or calculating differences.
+
+Notes
+
+Performance: Window functions can be resource-intensive on large datasets. Use PARTITION BY judiciously and ensure indexes on columns used in ORDER BY or PARTITION BY.
+MySQL Version: Requires MySQL 8.0+. Verify your database version before using window functions.
+Data Preparation: Ensure sample datasets (e.g., customers.csv, orders.csv, products.csv) are loaded into the mysql_learning database.
+Practice: Experiment with window specifications (e.g., ROWS vs. RANGE, different frame boundaries) to deepen understanding.
+Next Steps: Explore Advanced_Queries.sql for combining window functions with subqueries or dynamic SQL for more complex analytics.
